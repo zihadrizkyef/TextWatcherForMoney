@@ -8,64 +8,73 @@ import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    val moneyPrefix = "Rp "
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        etMoney.setText("${moneyPrefix}5.000.000.000.000")
-        etMoney.setSelection(moneyPrefix.length)
-
+        etMoney.setText("Rp ")
         etMoney.addTextChangedListener(object: TextWatcher {
+            /**
+             * Text to show before money number
+             */
+            val moneyPrefix = "Rp "
+
+
+            //DONT EDIT FIELD BELOW
             var prefString = ""
-            var prefCursorPosition = 0
-            val startEditablePosition = moneyPrefix.length
+            var prefCursorPos = 0
+            val startEditablePos = moneyPrefix.length
 
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 prefString = s.toString()
-                prefCursorPosition = etMoney.selectionStart
+                prefCursorPos = etMoney.selectionStart
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 s?.let {
                     etMoney.removeTextChangedListener(this)
-                    val currentPosition = etMoney.selectionStart
-                    if (prefCursorPosition < startEditablePosition ||
-                            (currentPosition < prefCursorPosition && currentPosition<startEditablePosition)) { //prevent user to write or delete in the $moneyPrefix text
-                        etMoney.setText(prefString)
-                        etMoney.setSelection(prefCursorPosition)
-                    } else {
-                        var cursorPos = etMoney.selectionStart
-                        val strBuilder = StringBuilder(it)
 
-                        var deleted = 0
-                        for (i in startEditablePosition .. it.length - 2) {
-                            val charAt = strBuilder.substring(i - deleted, i - deleted + 1)
-                            if (charAt == ".") {
-                                strBuilder.deleteCharAt(i - deleted)
-                                deleted++
-                                if (i - deleted < cursorPos) {
-                                    cursorPos -= 1
-                                }
+                    var cursorPos = etMoney.selectionStart
+
+                    //prevent user to write or delete in the $moneyPrefix text
+                    if (prefCursorPos < startEditablePos || (cursorPos < prefCursorPos && cursorPos < startEditablePos)) {
+                        etMoney.setText(prefString)
+                        etMoney.setSelection(prefCursorPos)
+                    } else {
+                        //delete money prefix
+                        var filteredText = it.substring(moneyPrefix.length)
+                        cursorPos = Math.max(0, cursorPos - moneyPrefix.length)
+
+                        //delete all dot
+                        for (i in cursorPos - 1 downTo 0) {
+                            if (filteredText[i] == '.') {
+                                cursorPos -= 1
                             }
                         }
+                        filteredText = filteredText.replace(".", "")
 
-                        val filteredText = strBuilder.toString()
-
-                        if (filteredText.length > 3+startEditablePosition) {
-                            for (i in filteredText.length - 3 downTo startEditablePosition+1 step 3) {
+                        //add new dot
+                        val dotBuilder = StringBuilder(filteredText)
+                        if (filteredText.length > 3) {
+                            for (i in filteredText.length - 3 downTo 1 step 3) {
                                 if (i < cursorPos) {
                                     cursorPos += 1
                                 }
-                                strBuilder.insert(i, ".")
+                                dotBuilder.insert(i, ".")
                             }
                         }
+                        filteredText = dotBuilder.toString()
 
-                        Log.i("AOEU", "length ${strBuilder.toString().length} pos $cursorPos")
-                        etMoney.setText(strBuilder.toString())
+                        //add money prefix
+                        filteredText = moneyPrefix + filteredText
+                        cursorPos += moneyPrefix.length
+
+                        Log.i("AOEU", "length ${filteredText.length} pos $cursorPos")
+                        etMoney.setText(filteredText)
                         etMoney.setSelection(cursorPos)
                     }
+
                     etMoney.addTextChangedListener(this)
                 }
             }
