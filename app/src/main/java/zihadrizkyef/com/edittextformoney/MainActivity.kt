@@ -1,7 +1,7 @@
 package zihadrizkyef.com.edittextformoney
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        etMoney.setText(moneyPrefix)
+        etMoney.setText("${moneyPrefix}5.000.000.000.000")
         etMoney.setSelection(moneyPrefix.length)
 
         etMoney.addTextChangedListener(object: TextWatcher {
@@ -41,10 +41,11 @@ class MainActivity : AppCompatActivity() {
 
                         var deleted = 0
                         for (i in startEditablePosition .. it.length - 2) {
-                            if (strBuilder.substring(i - deleted, i - deleted + 1) == ".") {
+                            val charAt = strBuilder.substring(i - deleted, i - deleted + 1)
+                            if (charAt == ".") {
                                 strBuilder.deleteCharAt(i - deleted)
                                 deleted++
-                                if (i < cursorPos) {
+                                if (i - deleted < cursorPos) {
                                     cursorPos -= 1
                                 }
                             }
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
 
+                        Log.i("AOEU", "length ${strBuilder.toString().length} pos $cursorPos")
                         etMoney.setText(strBuilder.toString())
                         etMoney.setSelection(cursorPos)
                     }
