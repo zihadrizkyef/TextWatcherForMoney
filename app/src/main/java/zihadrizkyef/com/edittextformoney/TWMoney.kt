@@ -52,7 +52,7 @@ class TWMoney(val editText: EditText, var moneyPrefix: String, var showHint: Boo
                 editText.setText("")
             } else if (prefCursorPos < startEditablePos || (cursorPos < prefCursorPos && cursorPos < startEditablePos)) {
                 //prevent user to write or delete in the $moneyPrefix text
-                editText.setText(prefString + "0")
+                editText.setText(prefString)
                 editText.setSelection(prefCursorPos)
             } else {
                 //delete money prefix
