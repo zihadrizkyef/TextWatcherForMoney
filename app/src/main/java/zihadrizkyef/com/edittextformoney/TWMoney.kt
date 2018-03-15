@@ -2,6 +2,7 @@ package zihadrizkyef.com.edittextformoney
 
 import android.annotation.SuppressLint
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.widget.EditText
 
@@ -25,6 +26,7 @@ class TWMoney(val editText: EditText, var moneyPrefix: String, var showHint: Boo
     init {
         if (editText.text.isEmpty()) {
             if (!showHint) {
+                editText.inputType = InputType.TYPE_CLASS_NUMBER
                 editText.setText(moneyPrefix)
             }
         }

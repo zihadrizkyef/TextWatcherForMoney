@@ -10,6 +10,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        etMoney.addTextChangedListener(TWMoney(etMoney, "Rp ", true))
+        etMoney.addTextChangedListener(TWMoney(etMoney, "Rp ", false))
     }
 }
