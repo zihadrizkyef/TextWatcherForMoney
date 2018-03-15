@@ -1,6 +1,12 @@
 # TextWatcher For Money / EditText For Money
 
-This a class that extends TextWatcher which is help you to make Edit Text which contain money-formated Text
+This is a class that extends TextWatcher which is help you to make Edit Text which is contain money-formated Text
+
+### MainFeature
+- Auto Dot separator
+- Money currency
+- Edit in the middle of money text will not move the cursor position to end of text
+
 ![EditTextForMoney.gif](https://github.com/zihadrizkyef/TextWatcherForMoney/blob/master/EditTextForMoney.gif)
 
 ### How to use it?
