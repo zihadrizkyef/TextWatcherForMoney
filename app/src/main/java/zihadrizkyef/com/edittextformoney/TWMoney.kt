@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
 
 /**
@@ -22,15 +21,13 @@ class TWMoney(val editText: EditText) : TextWatcher {
     var moneyPrefix = "$ "
         set(value) {
             startEditablePos = value.length
+            val oldMoneyPrefix = moneyPrefix
+            field = value
             val moneyText = editText.text.toString()
             var startSelectionPos = editText.selectionStart
-            Log.i("AOEU", moneyPrefix + value)
-            Log.i("AOEU", moneyText.replaceFirst(moneyPrefix, value))
-            editText.removeTextChangedListener(this)
-            editText.setText(moneyText.replaceFirst(moneyPrefix, value))
-            editText.addTextChangedListener(this)
-            if (startSelectionPos > moneyPrefix.length) {
-                startSelectionPos -= moneyPrefix.length
+            editText.setText(moneyText.replaceFirst(oldMoneyPrefix, value))
+            if (startSelectionPos > oldMoneyPrefix.length) {
+                startSelectionPos -= oldMoneyPrefix.length
                 startSelectionPos += value.length
             } else {
                 if (startSelectionPos > 0) {
@@ -38,22 +35,31 @@ class TWMoney(val editText: EditText) : TextWatcher {
                 }
             }
             editText.setSelection(startSelectionPos)
-            field = value
         }
-    var separator = "."
+    var separator = '.'
         set(value) {
             if (separator == decimal) {
                 throw UnsupportedOperationException("separator should not same as decimal")
             } else {
+                val moneyText = editText.text.toString()
+                val startSelectionPos = editText.selectionStart
+                val oldSeparator = separator
                 field = value
+                editText.setText(moneyText.replace(oldSeparator, value))
+                editText.setSelection(startSelectionPos)
             }
         }
-    var decimal = ","
+    var decimal = ','
         set(value) {
             if (separator == decimal) {
                 throw UnsupportedOperationException("decimal should not same as separator")
             } else {
+                val moneyText = editText.text.toString()
+                val startSelectionPos = editText.selectionStart
+                val oldDecimal = decimal
                 field = value
+                editText.setText(moneyText.replace(oldDecimal, value))
+                editText.setSelection(startSelectionPos)
             }
         }
 
@@ -112,11 +118,11 @@ class TWMoney(val editText: EditText) : TextWatcher {
 
                 //delete all $separator
                 for (i in cursorPos - 1 downTo 0) {
-                    if (filteredText[i] == '.') {
+                    if (filteredText[i] == separator) {
                         cursorPos -= 1
                     }
                 }
-                filteredText = filteredText.replace(separator, "")
+                filteredText = filteredText.replace(separator.toString(), "")
 
                 //delete 0 in the begining
                 var zeroCount = 0

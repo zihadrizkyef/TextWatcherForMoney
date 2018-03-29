@@ -12,6 +12,12 @@ This is a class that extends TextWatcher which is help you to make Edit Text whi
 ### How to use it?
 Just add a text listener to your edit text with this text watcher
 
-    etMoney.addTextChangedListener(TWMoney(etMoney, "Rp ", false))
+    val textWatcher = TWMoney(etMoney).apply {
+        moneyPrefix = "Rp "
+        separator = '.'
+        decimal = ','
+    }
+
+    etMoney.addTextChangedListener(textWatcher)
 
 And you're go! :D

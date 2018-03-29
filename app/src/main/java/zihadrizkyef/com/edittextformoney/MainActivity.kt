@@ -10,7 +10,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val textWatcher = TWMoney(etMoney)
+        val textWatcher = TWMoney(etMoney).apply {
+            moneyPrefix = "Rp "
+            separator = '.'
+            decimal = ','
+        }
+
         etMoney.addTextChangedListener(textWatcher)
         etMoney.requestFocus()
     }
