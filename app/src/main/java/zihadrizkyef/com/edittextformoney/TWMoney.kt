@@ -63,7 +63,7 @@ class TWMoney(val editText: EditText) : TextWatcher {
     private var startEditablePos = moneyPrefix.length
 
     init {
-        editText.inputType = InputType.TYPE_CLASS_NUMBER
+        editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         editText.setText(moneyPrefix)
         editText.setSelection(startEditablePos)
     }
@@ -94,7 +94,6 @@ class TWMoney(val editText: EditText) : TextWatcher {
                 } else if (actionIsDelete) {
                     cursorPos = moneyPrefix.length
                     if (prefString.length > moneyPrefix.length) { //If edit text is not just $moneyPrefix (there's number)
-                        Log.i("AOEU", ">>" + prefCursorEndPos + "<<")
                         if (prefCursorEndPos == -1 || prefCursorEndPos == prefCursorStartPos) { //If not selecting text
                             textToFormat = moneyPrefix + prefString.substring(moneyPrefix.length + 1) //delete first number
                         } else { //If selecting part or all text
