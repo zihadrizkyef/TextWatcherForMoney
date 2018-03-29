@@ -10,6 +10,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        etMoney.addTextChangedListener(TWMoney(etMoney, "Rp ", false))
+        val textWatcher = TWMoney(etMoney)
+        etMoney.addTextChangedListener(textWatcher)
+        etMoney.requestFocus()
     }
 }
