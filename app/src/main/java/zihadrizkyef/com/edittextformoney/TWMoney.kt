@@ -18,6 +18,23 @@ import android.widget.EditText
  * @param moneyPrefix : Text to show before money text. Might be "$ ", "Rp ", etc.
  */
 class TWMoney(val editText: EditText) : TextWatcher {
+    
+     companion object {
+        fun applyTo(
+            editText: EditText,
+            moneyPrefix: String = "$ ",
+            separator: Char = '.',
+            decimal: Char = ',',
+        ) {
+            val watcher = TWMoney(editText).apply {
+                this.moneyPrefix = moneyPrefix
+                this.separator = separator
+                this.decimal = decimal
+            }
+            editText.addTextChangedListener(watcher)
+        }
+    }
+    
     var moneyPrefix = "$ "
         set(value) {
             startEditablePos = value.length
