@@ -22,8 +22,9 @@ class MainActivity : AppCompatActivity() {
             ',',
             '.',
         )
+        textWatcher.isShowZero = true
         textWatcher.applyTo(binding.edit1)
-        binding.buttonConvert.setOnClickListener {
+        binding.button1.setOnClickListener {
             Log.i("AOEU", "anu1 ${textWatcher.value}")
             textWatcher.isShowZero = !textWatcher.isShowZero
         }

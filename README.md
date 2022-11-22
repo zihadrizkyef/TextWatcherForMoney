@@ -13,14 +13,14 @@ This is a class that extends TextWatcher which is help you to make Edit Text whi
 Just add a text listener to your edit text with this text watcher
 
     val textWatcher = CurrencyTextWatcher(
-        "Rp ",
-        ',',
+        "$ ",
         '.',
+        ',',
     )
+    textWatcher.isShowZero = true //if "0" should be shown when no data inserted
     textWatcher.applyTo(binding.edit1)
-    binding.buttonConvert.setOnClickListener {
+    binding.button1.setOnClickListener {
         Log.i("AOEU", "anu1 ${textWatcher.value}")
-        textWatcher.isShowZero = !textWatcher.isShowZero
     }
 
 And you're go! :D

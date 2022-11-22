@@ -13,28 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edit2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edit3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edit4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
-
         <Button
-            android:id="@+id/buttonConvert"
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Convert" />
+            android:text="Get Value" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
